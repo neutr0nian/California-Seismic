@@ -1,6 +1,7 @@
 import { useState, useEffect, Fragment } from 'react';
 import questionData from '../assets/questionData.js';
 import { MathJax} from "better-react-mathjax";
+import { Link } from 'react-router-dom';
 
 
 export default function QuestionDisplay( { questionKey='a1', setQuestionKey } ) {
@@ -12,7 +13,7 @@ export default function QuestionDisplay( { questionKey='a1', setQuestionKey } ) 
   const splitText = (text) => {
     //return an array of strings separated by any '<br>' characters
     //don't revise this for \n because MathJax has heavy use of \\
-    return text.split('<br>').map((line, index) => (
+    return text.split("<br>").map((line, index) => (
       <Fragment key={index}>
         {line}
         <br />
@@ -93,6 +94,21 @@ export default function QuestionDisplay( { questionKey='a1', setQuestionKey } ) 
     return currentTime.getMilliseconds() % 2;
   };
 
+    /**
+     * 
+     * @param {string} referenceStr - the reference to the document e.g. solution reference in asce document
+     * @returns a route with query parameters
+     */
+  const getImageLink = (referenceStr) => {
+    //check if document reference string is present
+    if(!referenceStr || !referenceStr.length)
+      return
+    
+    //split the solution title and get the last two elements
+    const [type, value] = referenceStr.split(" ").slice(-2);
+    return `type=${type.toLowerCase()}&value=${value}`;
+  }
+
   for (let i = 0; i < 4; i++) {
     if (getRandomBoolean()) {
       if (getRandomBoolean()) {
@@ -161,6 +177,7 @@ export default function QuestionDisplay( { questionKey='a1', setQuestionKey } ) 
           {solutionDisplay ?
             <div className='text-left p-4 mx-5'>
               <p className='py-4'>{`Answer: ${question.answer}`}</p>
+              <Link to={`/ASCE7?${getImageLink(question?.solutionTitle)}`} target='_blank'>{question?.solutionTitle}</Link>
               <MathJax>{splitText(question.solution)}</MathJax>
             </div>
           : <></>}

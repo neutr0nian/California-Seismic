@@ -10,6 +10,7 @@ import ExamGuide from './components/ExamGuide.jsx';
 import Contributors from './components/Contributors.jsx';
 import UnderConstruction from './components/UnderConstruction.jsx';
 import Footer from './components/Footer.jsx';
+import AsceReference from './pages/AsceReference';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path = "/practice" element = {<Practice />} />
         <Route path = "/exam-guide" element = {<ExamGuide />} />
         <Route path = "/contributors" element = {<Contributors />} />
+        <Route path = "/ASCE7" element = {<AsceReference />} />
       </Routes>
       <UnderConstruction displayUnderConstruction={false}></UnderConstruction>
       <Footer />
